@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { addToDb, getShoppingCart } from '../../utilities/fakedb';
+import { addToDb, deleteShoppingCart, getShoppingCart } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import './Shop.css'
+import { Link } from 'react-router-dom';
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
@@ -55,21 +56,30 @@ const Shop = () => {
         addToDb(product.id);
     }
 
+    const handelClearCart  = () => {
+        setCart([])
+        deleteShoppingCart();
+    }
+
     return (
-        <div className='shop-container'>
-            <div className="products-container">
-                {
-                    products.map(product => <Product 
-                        key={product.id}
-                        product={product}
-                        handelAddToCart = {handelAddToCart}
-                    ></Product>)
-                }
-            </div>
-            <div className="cart-container">
-                <Cart cart = {cart}></Cart>
-            </div>
+      <div className="shop-container">
+        <div className="products-container">
+          {products.map((product) => (
+            <Product
+              key={product.id}
+              product={product}
+              handelAddToCart={handelAddToCart}
+            ></Product>
+          ))}
         </div>
+        <div className="cart-container">
+          <Cart cart={cart} handelClearCart={handelClearCart}>
+            <Link className='proceed-link' to="/orders">
+              <button className="btn-proceed">Review Order</button>
+            </Link>
+          </Cart>
+        </div>
+      </div>
     );
 };
 

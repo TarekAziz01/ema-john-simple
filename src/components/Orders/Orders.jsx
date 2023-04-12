@@ -7,7 +7,8 @@ import { deleteShoppingCart, removeFromDb } from "../../utilities/fakedb";
 
 const Orders = () => {
     const savedCart = useLoaderData();
-    const [cart, setCart] = useState(savedCart);
+  const [cart, setCart] = useState(savedCart);
+  console.log(cart)
 
     const handelRemoveFromCart = (id) => {
         const remaining = cart.filter(pd => pd.id !== id);
